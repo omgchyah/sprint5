@@ -1,0 +1,112 @@
+In this exercise, you will learn how to create a complete API with access control configured using tokens.
+Key Requirements:
+
+    Create a Complete API:
+        Design and implement an API that includes multiple endpoints for different resources.
+    Access Control with Tokens:
+        Implement authentication using tokens to secure your API.
+    Minimum Requirements:
+        Your API should manage at least two different resources.
+        Implement user management with authentication.
+        Ensure there are at least two different user roles.
+        Include some complex business logic beyond basic CRUD operations.
+
+Steps to Follow:
+
+    API Design:
+        Define the resources your API will manage.
+        Design the endpoints for these resources, including methods for creating, reading, updating, and deleting (CRUD).
+        Plan the access control, determining which roles can access which endpoints.
+
+    Authentication:
+        Implement user authentication using token-based methods, such as JWT (JSON Web Tokens) or OAuth.
+        Ensure secure handling of user credentials and tokens.
+
+    User Roles:
+        Define at least two different roles (e.g., Admin, User) with different access permissions.
+        Implement role-based access control to restrict access to certain endpoints based on the user’s role.
+
+    Complex Business Logic:
+        Include functionality that involves more complex operations than just creating, reading, updating, and deleting data. This could involve calculations, data processing, or any other advanced logic relevant to your application.
+
+    Documentation:
+        Document your API endpoints, including request methods, parameters, and expected responses.
+        Provide clear instructions on how to authenticate and use the API.
+
+    Optional Personal Project:
+        You have the option to propose a personal project within this context. If you choose this route, you must design the endpoints yourself and get approval for your design before proceeding.
+        Ensure your personal project meets all the requirements mentioned above.
+
+By following these steps, you will be able to create a robust and secure API with proper access control, user management, and complex business logic.
+
+To apply the requirements to your project, follow these steps:
+Design the API
+
+Resources:
+
+    Players
+    Games
+
+Endpoints:
+
+    POST /players: Create a player.
+    PUT /players/{id}: Modify the player's name.
+    POST /players/{id}/games/: A specific player makes a dice roll.
+    DELETE /players/{id}/games: Delete all games of a player.
+    GET /players: Return the list of all players with their average success percentage.
+    GET /players/{id}/games: Return the list of games for a player.
+    GET /players/ranking: Return the average ranking of all players.
+    GET /players/ranking/loser: Return the player with the worst success percentage.
+    GET /players/ranking/winner: Return the player with the best success percentage.
+
+Authentication and Authorization
+
+    User Registration and Authentication:
+        Implement user registration with unique email and optional nickname.
+        Use Passport for authentication, ensuring all endpoints are protected.
+    Role-Based Access Control:
+        Define roles (e.g., Admin, Player).
+        Restrict access to certain endpoints based on user roles. For example, only Admins can access endpoints for viewing all players and rankings.
+
+Implement Business Logic
+
+    Game Mechanics:
+        Implement logic for rolling dice and determining the outcome (win if the sum is 7, lose otherwise).
+        Store each game result with the values of the dice and the result.
+
+    Statistics:
+        Calculate and store the success percentage for each player.
+        Implement methods to calculate the average success percentage of all players.
+        Determine the players with the highest and lowest success percentages.
+
+Data Management
+
+    Player Management:
+        Create players with unique identifiers, registration dates, and optional nicknames defaulting to "Anonymous" if not provided.
+    Game Management:
+        Store each game played by a player, with details of each dice roll and whether the game was won or lost.
+        Allow deletion of all games for a specific player, but not individual games.
+
+Security
+
+    Authentication:
+        Protect all endpoints with Passport authentication to ensure only authenticated users can access the API.
+    Authorization:
+        Implement role-based access control to restrict access to certain endpoints based on user roles.
+
+Testing
+
+    Test-Driven Development (TDD):
+        Write unit and integration tests for each endpoint.
+        Ensure tests cover all functionality, including creating players, modifying player names, rolling dice, deleting games, and retrieving player and game statistics.
+
+Summary
+
+    Endpoints: Implement the required API endpoints.
+    Authentication: Use Passport to secure all endpoints.
+    Authorization: Define roles and restrict access based on these roles.
+    Business Logic: Implement dice roll mechanics, success percentage calculations, and rankings.
+    Data Management: Manage players and their games, ensuring data integrity and proper relationships.
+    Testing: Write comprehensive tests to ensure the API functions correctly.
+
+This approach ensures you meet all requirements, including API design, security, role-based access control, and robust testing.
