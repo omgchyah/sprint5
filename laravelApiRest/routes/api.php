@@ -12,6 +12,6 @@ Route::get('/user', function (Request $request) {
 Route::group(['namespace' => 'App\Http\Controllers'], function(){
     Route::get('/players', [UserController::class, 'index']);
 
-    Route::get('/players/{user}', [UserController::class, 'show']);
+    Route::get('/players/{id}/games', [UserController::class, 'show']);
 
 });

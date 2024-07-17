@@ -52,11 +52,31 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public function show($id)
     {
-        $user = User::find($user);
+        $user = User::find($id);
 
-        return response()->json($user)->with();
+        $games = $user->games;
+        $gamesArray = [];
+
+        foreach($games as $game){
+            $gamesArray[] = $game;
+        }
+
+        $gamesArray = [
+            'id' => $gamesArray[0],
+        ];
+
+
+        return response()->json([
+            'id' => $user->id,
+            'nickname' => $user->nickname,
+            'name' => $user->name,
+            'email' => $user->email,
+            'role' => $user->role,
+            'successPercentage' => $user->getSuccessPercentage(),
+            'games' => $gamesArray,
+        ]);
     }
 
     /**
