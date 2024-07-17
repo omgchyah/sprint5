@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->integer('dice1');
             $table->integer('dice2');
-            $table->integer('result');
+            $table->integer('result'); //win or lose
             $table->timestamps();
         });
     }

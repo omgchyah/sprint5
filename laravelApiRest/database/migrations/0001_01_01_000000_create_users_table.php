@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->enum('role', ['admin', 'user', 'guest']);
+            //$table->decimal('success_percentage', 5, 2)->default(0);
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
