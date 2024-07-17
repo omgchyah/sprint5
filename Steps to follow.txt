@@ -110,3 +110,86 @@ Summary
     Testing: Write comprehensive tests to ensure the API functions correctly.
 
 This approach ensures you meet all requirements, including API design, security, role-based access control, and robust testing.
+
+Understanding the Assignment
+Database, Tables, and Models
+
+To create a comprehensive API with access control configured using tokens, as described in the assignment, you'll need to consider the following key components related to databases, tables, and models.
+Database
+
+Your database will store all the necessary data for users, games, and their rolls. You will need to structure it to handle authentication, user roles, game data, and complex logic for calculating success rates.
+Tables
+
+    Users Table
+        Columns:
+            id: Unique identifier for each user.
+            email: Unique email for each user.
+            nickname: Optional nickname, defaults to "Anonymous" if not provided.
+            password: Hashed password for authentication.
+            role: Role of the user (e.g., player or admin).
+            created_at: Timestamp for user registration.
+
+    Games Table
+        Columns:
+            id: Unique identifier for each game session.
+            user_id: Foreign key linking to the users table.
+            dice1: Value of the first die roll.
+            dice2: Value of the second die roll.
+            result: Result of the game (win or lose).
+            created_at: Timestamp for when the game was played.
+
+    Roles Table (if using a separate roles table, otherwise integrate into the users table)
+        Columns:
+            id: Unique identifier for each role.
+            role_name: Name of the role (e.g., admin, player).
+
+Models
+
+    User Model
+        Manages user data and includes authentication logic.
+        Methods for creating a user, retrieving user data, and checking roles.
+
+    Game Model
+        Manages game sessions and includes logic for recording dice rolls and calculating results.
+        Methods for creating a new game, retrieving game data, and calculating success rates.
+
+    Role Model (if using a separate roles table)
+        Manages role data and includes methods for assigning roles to users.
+
+API Endpoints
+
+    User Management
+        Register a new user.
+        Authenticate a user and issue tokens.
+        View user profile.
+        Admin: View all users.
+        Admin: View success rates of all users.
+
+    Game Management
+        Create a new game session (roll dice).
+        View all game sessions for a user.
+        Delete all game sessions for a user.
+
+    Statistics
+        View the success rate for a specific user.
+        Admin: View overall success rate for all users.
+
+Access Control
+
+    Authentication
+        Use tokens (e.g., JWT) to authenticate API requests.
+        Ensure that only authenticated users can create game sessions and view their game data.
+
+    Authorization
+        Differentiate between regular users and admins.
+        Ensure that only admins can view all users and their success rates.
+
+Summary
+
+    Database: You will need a relational database with at least users, games, and optionally roles tables.
+    Tables: Structure the tables to handle user information, game data, and roles.
+    Models: Create models to manage the data and include business logic for user management and game sessions.
+    API Endpoints: Design endpoints for user registration, authentication, game session management, and statistics.
+    Access Control: Implement authentication using tokens and authorization to restrict access based on user roles.
+
+By structuring your project in this way, you'll be able to meet the requirements of the assignment and create a robust API for managing users, games, and access control.

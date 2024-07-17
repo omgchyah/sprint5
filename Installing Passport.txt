@@ -1,0 +1,30 @@
+Installing Passport
+
+composer clear-cache
+composer self-update
+
+Enable the Sodium Extension
+
+First, ensure that the sodium extension is enabled in your PHP configuration:
+
+    Open your php.ini file (usually found in C:\xampp\php\php.ini).
+
+    Locate the line that loads the sodium extension. It should look something like this:
+
+    ini
+
+;extension=sodium
+
+Remove the semicolon ; to uncomment the line:
+
+ini
+
+extension=sodium
+
+Save the file and restart your web server (Apache or Nginx).
+
+composer require laravel/passport -W
+
+
+php artisan passport:install
+
