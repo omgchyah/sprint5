@@ -24,10 +24,10 @@ class GameFactory extends Factory
 
 
         return [
-            'customer_id' => User::factory(),
-            'dice1' => $this->$dice1,
-            'dice2' => $this->$dice2,
-            'result' => $this->$result
+            'user_id' => User::factory(),
+            'dice1' => $dice1,
+            'dice2' => $dice2,
+            'result' => $result,
         ];
     }
 }

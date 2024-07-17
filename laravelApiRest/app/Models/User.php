@@ -18,6 +18,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'nickname',
         'email',
         'password',
     ];
@@ -25,6 +26,15 @@ class User extends Authenticatable
     public function games()
     {
         return $this->hasMany(Game::class);
+    }
+
+    public function getSuccessPercentage(): float
+    {
+        $totalGames = $this->games()->count();
+        $wonGames = $this->games()->where('result', 'W')->count();
+
+        return ($totalGames > 0) ? ($wonGames / $totalGames * 100) : 0;
+
     }
 
     /**

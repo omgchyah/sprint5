@@ -24,11 +24,14 @@ class UserFactory extends Factory
     public function definition(): array
     {
 
+        $name = fake()->name();
+        $nameArray = explode(' ', $name);
+        $email = $nameArray[0] . (isset($nameArray[1]) ? $nameArray[1] : '') . fake()->randomNumber() . "@example.com";
 
         return [
             'nickname' => fake()->unique()->userName(),
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
+            'name' => $name,
+            'email' => strtolower($email),
             'email_verified_at' => now(),
             'role' => fake()->randomElement(['user', 'guest']),
             'password' => static::$password ??= Hash::make('password'),
