@@ -13,9 +13,24 @@ class UserController extends Controller
      */
     public function index()
     {
-         $users = User::all();
+         $users = User::whereIn('role', ['user', 'guest'])->with('games')->get();
 
-         return response()->json($users);
+         $userData = [];
+         
+         foreach($users as $user) {
+            $userData[] = [
+            'id' => $user->id,
+            'nickname' => $user->nickname,
+            'name' => $user->name,
+            'email' => $user->email,
+            'role' => $user->role,
+            'successPercentage' => $user->getSuccessPercentage(),
+            ];
+         }
+
+         return response()->json([
+            'data' => $userData,
+        ]);
     }
 
     /**
@@ -39,7 +54,9 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
+        $user = User::find($user);
+
+        return response()->json($user)->with();
     }
 
     /**
