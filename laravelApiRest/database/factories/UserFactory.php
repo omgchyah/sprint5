@@ -24,7 +24,7 @@ class UserFactory extends Factory
     public function definition(): array
     {
 
-        $name = fake()->name();
+        $name = fake()->unique->name();
         $nameArray = explode(' ', $name);
         $email = $nameArray[0] . (isset($nameArray[1]) ? $nameArray[1] : '') . fake()->randomNumber() . "@example.com";
 
