@@ -23,11 +23,19 @@ class StoreUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'role' => ['required', Rule::in(['user', 'guest'])],
             'nickname' => ['required', 'string', 'max:255', 'unique:users,nickname'],
             'name' => ['nullable', 'string', 'max:255'],
             'email' => ['required', 'email', 'unique:users,email'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'min:8'],
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'nickname.required' => 'A nickname is required.',
+            'email.unique' => 'This email address is already registered.',
+        ];
+    }
+    
 }

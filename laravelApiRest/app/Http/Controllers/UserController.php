@@ -47,7 +47,18 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        return new UserResource(User::create($request->all()));
+        $data = $request->validated();
+
+        if(empty($data['name'])){
+            $data['name'] = 'Anonymous';
+            $data['role'] = 'guest';
+        } else {
+            $data['role'] = 'user';
+        }
+        
+        $user = User::create($data);
+
+        return new UserResource($user);
     }
 
     /**
