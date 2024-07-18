@@ -92,6 +92,60 @@ class UserController extends Controller
         ]);
     }
 
+    public function showLoser()
+    {
+
+        $users = User::whereIn('role', ['user', 'guest'])->with('games')->get();
+
+        $minSuccessPercentage = 100;
+
+        foreach($users as $user) {
+            $successPercentage = $user->getSuccessPercentage();
+            if($successPercentage < $minSuccessPercentage) {
+                $minSuccessPercentage = $successPercentage;
+                $loser = $user;
+            }
+        }
+
+        return response()->json([
+            'loser' => [
+                'playerId' => $loser->id,
+                'nickname' => $loser->nickname,
+                'name' => $loser->name,
+                'email' => $loser->email,
+                'role' => $loser->role,
+                'successPercentage' => $loser->getSuccessPercentage(),
+                ]
+            ]);
+    }
+
+    public function showWinner()
+    {
+        $users = User::whereIn('role', ['user', 'guest'])->with('games')->get();
+
+        $maxSuccessPercentage = 0;
+
+        foreach($users as $user) {
+            $successPercentage = $user->getSuccessPercentage();
+            if($successPercentage > $maxSuccessPercentage) {
+                $maxSuccessPercentage = $successPercentage;
+                $winnder = $user;
+            }
+        }
+
+        return response()->json([
+            'loser' => [
+                'playerId' => $loser->id,
+                'nickname' => $loser->nickname,
+                'name' => $loser->name,
+                'email' => $loser->email,
+                'role' => $loser->role,
+                'successPercentage' => $loser->getSuccessPercentage(),
+                ]
+            ]);
+
+    }
+
     /**
      * Show the form for editing the specified resource.
      */

@@ -20,4 +20,10 @@ Route::group(['namespace' => 'App\Http\Controllers'], function(){
     //retorna el rànquing mitjà de tots els jugadors/es del sistema. És a dir, el percentatge mitjà d’èxits.
     Route::get('/players/ranking', [UserController::class, 'averageSuccessRanking']);
 
+    //retorna el jugador/a amb pitjor percentatge d’èxit.
+    Route::get('players/ranking/loser', [UserController::class, 'showLoser']);
+
+    //GET /players/ranking/winner: retorna el jugador/a amb millor percentatge d’èxit.
+    Route::get('playes/ranking/winner', [UserController::class, 'showWinner']);
+
 });
