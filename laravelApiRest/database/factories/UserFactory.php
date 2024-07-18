@@ -24,16 +24,23 @@ class UserFactory extends Factory
     public function definition(): array
     {
 
-        $name = fake()->unique->name();
-        $nameArray = explode(' ', $name);
-        $email = $nameArray[0] . (isset($nameArray[1]) ? $nameArray[1] : '') . fake()->randomNumber() . "@example.com";
+        $role = fake()->randomElement(['user', 'guest']);
 
+        if($role == 'user') {
+            $name = fake()->unique->name();
+            $nameArray = explode(' ', $name);
+            $email = $nameArray[0] . (isset($nameArray[1]) ? $nameArray[1] : '') . fake()->randomNumber() . "@example.com";
+        } else {
+            $name = 'Anonymous';
+            $email = fake()->unique()->email;
+        }
+  
         return [
             'nickname' => fake()->unique()->userName(),
             'name' => $name,
             'email' => strtolower($email),
             'email_verified_at' => now(),
-            'role' => fake()->randomElement(['user', 'guest']),
+            'role' => $role,
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
         ];

@@ -19,7 +19,7 @@ class UserController extends Controller
          
          foreach($users as $user) {
             $userData[] = [
-            'id' => $user->id,
+            'playerId' => $user->id,
             'nickname' => $user->nickname,
             'name' => $user->name,
             'email' => $user->email,
@@ -56,26 +56,39 @@ class UserController extends Controller
     {
         $user = User::find($id);
 
+        if (!$user) {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+
         $games = $user->games;
         $gamesArray = [];
 
-        foreach($games as $game){
-            $gamesArray[] = $game;
+        foreach($games as $game) {
+            $gamesArray[] = [
+                'gameId' => $game->id,
+                'dice1' => $game->dice1,
+                'dice2' => $game->dice2,
+                'result' => $game->result,
+            ];
         }
 
-        $gamesArray = [
-            'id' => $gamesArray[0],
-        ];
-
-
         return response()->json([
-            'id' => $user->id,
+            'playerId' => $user->id,
             'nickname' => $user->nickname,
             'name' => $user->name,
             'email' => $user->email,
             'role' => $user->role,
             'successPercentage' => $user->getSuccessPercentage(),
             'games' => $gamesArray,
+        ]);
+    }
+
+    public function averageSuccessRanking()
+    {
+        $averageSuccessPercentage = User::getSuccessAveragePercentage();
+
+        return response()->json([
+            'averageSuccessPercentage' => $averageSuccessPercentage,
         ]);
     }
 

@@ -37,6 +37,20 @@ class User extends Authenticatable
 
     }
 
+    public static function getSuccessAveragePercentage()
+    {
+        $users = self::whereIn('role', ['user', 'guest'])->with('games')->get();
+
+        $totalSuccessPercentage = 0;
+        $numberPlayers = $users->count();
+
+        foreach($users as $user) {
+            $totalSuccessPercentage += $user->getSuccessPercentage();
+        }
+
+        return ($numberPlayers > 0) ? ($totalSuccessPercentage / $numberPlayers) : 0;
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

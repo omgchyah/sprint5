@@ -10,8 +10,14 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::group(['namespace' => 'App\Http\Controllers'], function(){
+
+    //GET /players: retorna el llistat de tots els jugadors/es del sistema amb el seu percentatge mitjà d’èxits
     Route::get('/players', [UserController::class, 'index']);
 
+    //GET /players/{id}/games: retorna el llistat de jugades per un jugador/a.
     Route::get('/players/{id}/games', [UserController::class, 'show']);
+
+    //retorna el rànquing mitjà de tots els jugadors/es del sistema. És a dir, el percentatge mitjà d’èxits.
+    Route::get('/players/ranking', [UserController::class, 'averageSuccessRanking']);
 
 });
