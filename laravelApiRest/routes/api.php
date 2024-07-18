@@ -24,6 +24,9 @@ Route::group(['namespace' => 'App\Http\Controllers'], function(){
     Route::get('players/ranking/loser', [UserController::class, 'showLoser']);
 
     //GET /players/ranking/winner: retorna el jugador/a amb millor percentatge d’èxit.
-    Route::get('playes/ranking/winner', [UserController::class, 'showWinner']);
+    Route::get('/players/ranking/winner', [UserController::class, 'showWinner']);
+
+    //crea un jugador/a.
+    Route::post('players', [UserController::class, 'store']);
 
 });

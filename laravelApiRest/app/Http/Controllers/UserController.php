@@ -124,26 +124,26 @@ class UserController extends Controller
         $users = User::whereIn('role', ['user', 'guest'])->with('games')->get();
 
         $maxSuccessPercentage = 0;
+        $winner = null;
 
         foreach($users as $user) {
             $successPercentage = $user->getSuccessPercentage();
             if($successPercentage > $maxSuccessPercentage) {
                 $maxSuccessPercentage = $successPercentage;
-                $winnder = $user;
+                $winner = $user;
             }
         }
 
         return response()->json([
-            'loser' => [
-                'playerId' => $loser->id,
-                'nickname' => $loser->nickname,
-                'name' => $loser->name,
-                'email' => $loser->email,
-                'role' => $loser->role,
-                'successPercentage' => $loser->getSuccessPercentage(),
+            'winner' => [
+                'playerId' => $winner->id,
+                'nickname' => $winner->nickname,
+                'name' => $winner->name,
+                'email' => $winner->email,
+                'role' => $winner->role,
+                'successPercentage' => $winner->getSuccessPercentage(),
                 ]
             ]);
-
     }
 
     /**
