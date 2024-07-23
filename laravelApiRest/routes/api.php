@@ -39,5 +39,6 @@ Route::group(['namespace' => 'App\Http\Controllers'], function(){
     Route::post('/players/{id}/games', [GameController::class, 'store']);
 
     //DELETE /players/{id}/games: elimina les tirades del jugador/a.
+    Route::delete('players/{id}/games', [Gamecontroller::class, 'destroy']);
 
 });
