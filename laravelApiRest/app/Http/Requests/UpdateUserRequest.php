@@ -11,7 +11,7 @@ class UpdateUserRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,8 +21,22 @@ class UpdateUserRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            //
-        ];
+        $method = $this->method();
+        if($method == 'PUT') {
+            return [
+            'nickname' => ['required', 'string', 'max:255', 'unique:users,nickname'],
+            'name' => ['nullable', 'string', 'max:255'],
+            'email' => ['required', 'email', 'unique:users,email'],
+            'password' => ['required', 'string', 'min:8'],
+            ];   
+        } else {
+            return [
+                'nickname' => ['sometimes', 'string', 'max:255', 'unique:users,nickname'],
+                'name' => ['sometimes', 'string', 'max:255'],
+                'email' => ['sometimes', 'email', 'unique:users,email'],
+                'password' => ['sometimes', 'string', 'min:8'],
+                ];   
+        }
+
     }
 }
