@@ -30,7 +30,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function(){
     Route::post('players', [UserController::class, 'store']);
 
     //PUT /players/{id} : modifica el nom del jugador/a.
-    Route::put('/players/{id}', [UserController::class, 'update']);
+    Route::patch('/players/{id}', [UserController::class, 'update']);
 
     //POST /players/{id}/games/ : un jugador/a específic realitza una tirada dels daus.
 
