@@ -49,6 +49,8 @@ class UserController extends Controller
     {
         $data = $request->validated();
 
+        $data['name'] = trim($data['name']);
+
         if(empty($data['name'])){
             $data['name'] = 'Anonymous';
             $data['role'] = 'guest';

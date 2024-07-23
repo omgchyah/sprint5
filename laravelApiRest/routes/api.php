@@ -27,7 +27,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function(){
     Route::get('/players/ranking/winner', [UserController::class, 'showWinner']);
 
     //crea un jugador/a.
-    Route::post('players', [UserController::class, 'store']);
+    Route::post('/players', [UserController::class, 'store']);
 
     //PUT /players/{id} : modifica todos los atributos
     Route::put('/players/{id}', [UserController::class, 'update']);
