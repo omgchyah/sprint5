@@ -169,9 +169,33 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(UpdateUserRequest $request, $id)
     {
-        $user->update($request->all());
+        $user = User::find($id);
+
+        if(!$user) {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+
+        $data = $request->validated();
+
+        //hash the password
+        if(isset($data['password'])) {
+            $data['password'] = bcrypt($data['password']);
+        }
+
+        //Change role to user if names is changed from anonymous
+        if(isset($data['name']) && $data['name'] !== 'Anonymous') {
+            $data['role'] = 'user';
+        }
+
+        //update the user
+        $user->update($data);
+
+        return response()->json([
+            'message' => 'User updated successfully',
+            'user' => $user
+        ], 200);
     }
 
     /**

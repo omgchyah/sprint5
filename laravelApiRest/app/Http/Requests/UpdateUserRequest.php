@@ -22,14 +22,15 @@ class UpdateUserRequest extends FormRequest
     public function rules(): array
     {
         $method = $this->method();
+
         if($method == 'PUT') {
             return [
             'nickname' => ['required', 'string', 'max:255', 'unique:users,nickname'],
             'name' => ['nullable', 'string', 'max:255'],
             'email' => ['required', 'email', 'unique:users,email'],
-            'password' => ['required', 'string', 'min:8'],
+            'password' => ['required', 'string', 'min:6'],
             ];   
-        } else {
+        } else if($method == 'PATCH') {
             return [
                 'nickname' => ['sometimes', 'string', 'max:255', 'unique:users,nickname'],
                 'name' => ['sometimes', 'string', 'max:255'],
@@ -37,6 +38,8 @@ class UpdateUserRequest extends FormRequest
                 'password' => ['sometimes', 'string', 'min:8'],
                 ];   
         }
+
+        return [];
 
     }
 }
