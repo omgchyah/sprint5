@@ -51,7 +51,7 @@ class GameController extends Controller
         return response()->json([
             'message' => 'Game created successfully',
             'game' => $game
-        ]);      
+        ], 201);      
     }
 
     /**
@@ -95,6 +95,6 @@ class GameController extends Controller
 
         return response()->json([
             'message' => 'Games for this user deleted successfully.'
-        ]);  
+        ], 204);  
     }
 }

@@ -31,7 +31,7 @@ class UserController extends Controller
 
          return response()->json([
             'data' => $userData,
-        ]);
+        ], 200);
     }
 
     /**
@@ -58,7 +58,7 @@ class UserController extends Controller
         
         $user = User::create($data);
 
-        return new UserResource($user);
+        return response()->json(new UserResource($user), 201);
     }
 
     /**
@@ -92,7 +92,7 @@ class UserController extends Controller
             'role' => $user->role,
             'successPercentage' => $user->getSuccessPercentage(),
             'games' => $gamesArray,
-        ]);
+        ], 200);
     }
 
     public function averageSuccessRanking()
@@ -101,7 +101,7 @@ class UserController extends Controller
 
         return response()->json([
             'averageSuccessPercentage' => $averageSuccessPercentage,
-        ]);
+        ], 200);
     }
 
     public function showLoser()
@@ -119,6 +119,12 @@ class UserController extends Controller
             }
         }
 
+        if(!isset($loser)) {
+            return response()->json([
+                'error' => 'No players found'
+            ], 404);
+        }
+
         return response()->json([
             'loser' => [
                 'playerId' => $loser->id,
@@ -128,7 +134,7 @@ class UserController extends Controller
                 'role' => $loser->role,
                 'successPercentage' => $loser->getSuccessPercentage(),
                 ]
-            ]);
+            ], 200);
     }
 
     public function showWinner()
@@ -146,6 +152,10 @@ class UserController extends Controller
             }
         }
 
+        if (!isset($winner)) {
+            return response()->json(['error' => 'No players found'], 404);
+        }
+
         return response()->json([
             'winner' => [
                 'playerId' => $winner->id,
@@ -155,7 +165,7 @@ class UserController extends Controller
                 'role' => $winner->role,
                 'successPercentage' => $winner->getSuccessPercentage(),
                 ]
-            ]);
+            ], 200);
     }
 
     /**
