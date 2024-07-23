@@ -36,6 +36,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function(){
     Route::patch('/players/{id}', [UserController::class, 'update']);
 
     //POST /players/{id}/games/ : un jugador/a específic realitza una tirada dels daus.
+    Route::post('/players/{id}/games', [GameController::class, 'store']);
 
     //DELETE /players/{id}/games: elimina les tirades del jugador/a.
 

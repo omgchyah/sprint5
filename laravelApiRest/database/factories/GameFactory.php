@@ -18,8 +18,8 @@ class GameFactory extends Factory
     public function definition(): array
     {
 
-        $dice1 = fake()->numberBetween(1, 9);
-        $dice2 = fake()->numberBetween(1, 9);
+        $dice1 = fake()->numberBetween(1, 6);
+        $dice2 = fake()->numberBetween(1, 6);
         $result = ($dice1 + $dice2 == 7) ? 'W' : 'L';
 
 

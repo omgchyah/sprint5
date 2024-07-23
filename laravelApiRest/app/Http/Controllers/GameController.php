@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Game;
 use App\Http\Requests\StoreGameRequest;
 use App\Http\Requests\UpdateGameRequest;
+use App\Models\User;
 
 class GameController extends Controller
 {
@@ -29,9 +30,28 @@ class GameController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreGameRequest $request)
+    public function store(StoreGameRequest $request, $id)
     {
-        //
+        $user = User::find($id);
+
+        if(!$user) {
+            response()->json(['error' => 'User not found'], 404);
+        }
+
+        $dice1 = fake()->numberBetween(1, 6);
+        $dice2 = fake()->numberBetween(1, 6);
+        $result = ($dice1 + $dice2 == 7) ? 'W' : 'L';
+
+        $game = $user->games()->create([
+            'dice1' => $dice1,
+            'dice2' => $dice2,
+            'result' => $result,
+        ]);
+
+        return response()->json([
+            'message' => 'Game created successfully',
+            'game' => $game
+        ]);      
     }
 
     /**
