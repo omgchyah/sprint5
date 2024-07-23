@@ -14,5 +14,11 @@ class Game extends Model
         return $this->belongsTo(User::class);
     }
 
+    protected $fillable = [
+        'dice1',
+        'dice2',
+        'result',
+    ];
+
 
 }

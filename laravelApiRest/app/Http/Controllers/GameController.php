@@ -30,7 +30,7 @@ class GameController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreGameRequest $request, $id)
+    public function store($id)
     {
         $user = User::find($id);
 
