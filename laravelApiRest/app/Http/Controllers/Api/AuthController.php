@@ -7,11 +7,13 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
     public function register(Request $request)
     {
+
         $registerData = $request->validate([
             'nickname' => ['required', 'string', 'max:255', 'unique:users,nickname'],
             'name' => ['nullable', 'string', 'max:255'],
@@ -19,19 +21,29 @@ class AuthController extends Controller
             'password' => ['required', 'string', 'min:8'],
         ]);
 
-        $user = User::create([
-            'nickname' => $registerData['nickname'],
-            'name' => $registerData['name'],
-            'email' => $registerData['email'],
-            'password' => Hash::make($registerData['password']),
-        ]);
+        Log::info('Register data:', $registerData);
 
-        $accessToken = $user->createToken('authToken')->accessToken;
+        $registerData['role'] = empty($registerData['name']) ? 'guest' : 'user';
+        if (empty($registerData['name'])) {
+            $registerData['name'] = 'Anonymous';
+        }
 
-        return response()->json([
-            'user' => $user,
-            'access_token' => $accessToken,
-        ], 201);
+        $registerData['password'] = Hash::make($registerData['password']);
+
+        try {
+            $user = User::create($registerData);
+            $accessToken = $user->createToken('authToken')->accessToken;
+
+            return response()->json([
+                'user' => $user,
+                'access_token' => $accessToken,
+            ], 201);
+        } catch (\Exception $e) {
+            // Handle the exception, log it, or return an error response
+            Log::error('Error creating user:', ['exception' => $e]);
+            return response()->json(['message' => 'Error creating user'], 500);
+        }
+
 
     }
 
@@ -53,6 +65,6 @@ class AuthController extends Controller
             'user' => $user,
             'access_token' => $accessToken,
         ]);
-        
+
     }
 }

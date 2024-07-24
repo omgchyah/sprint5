@@ -4,15 +4,23 @@ use App\Http\Controllers\GameController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\API\AuthController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
+
+Route::post('login', [AuthController::class, 'login']);
+
 Route::group(['namespace' => 'App\Http\Controllers'], function(){
 
+    Route::post('register', [AuthController::class, 'register']);
+
+    Route::post('login', [AuthController::class, 'login']);
+
     //GET /players: retorna el llistat de tots els jugadors/es del sistema amb el seu percentatge mitjà d’èxits
-    Route::get('/players', [UserController::class, 'index']);
+    Route::get('players', [UserController::class, 'index']);
 
     //GET /players/{id}/games: retorna el llistat de jugades per un jugador/a.
     Route::get('/players/{id}/games', [UserController::class, 'show']);

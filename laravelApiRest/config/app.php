@@ -123,9 +123,6 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
-    'providers' => [
-    // Other Service Providers
-    Laravel\Passport\PassportServiceProvider::class,
-    ],
+
 
 ];

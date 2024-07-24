@@ -49,6 +49,7 @@ class UserController extends Controller
     {
         $data = $request->validated();
 
+        //Eliminate blank spaces before and after
         $data['name'] = trim($data['name']);
 
         if(empty($data['name'])){
