@@ -4,6 +4,11 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Laravel\Passport\Passport;
+use App\Models\Passport\AuthCode;
+use App\Models\Passport\Client;
+use App\Models\Passport\PersonalAccessClient;
+use App\Models\Passport\RefreshToken;
+use App\Models\Passport\Token;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -20,8 +25,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Passport::loadKeysFrom(__DIR__.'/../secrets/oauth');
-        
-        Passport::hashClientSecrets();
+
     }
 }
