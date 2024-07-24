@@ -50,21 +50,31 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $loginData = $request->validate([
-            'email' => ['required', 'email', 'unique:users,email'],
+            'email' => ['required', 'email'],
             'password' => ['required', 'string', 'min:8'],
         ]);
-
+    
         if (!auth()->attempt($loginData)) {
             return response()->json(['message' => 'Invalid credentials'], 401);
         }
-    
-        $user = auth()->user();
-        $accessToken = $user->createToken('authToken')->accessToken;
-    
-        return response()->json([
-            'user' => $user,
-            'access_token' => $accessToken,
-        ]);
 
+        try {
+            $user = auth()->user();
+            $accessToken = $user->createToken('authToken')->accessToken;
+        
+            return response()->json([
+                'user' => $user,
+                'access_token' => $accessToken,
+            ], 200);
+        } catch (ModelNotFoundException $e) {
+            Log::error('User not found:', ['exception' => $e, 'user_id' => $userId]);
+            return response()->json(['message' => 'User not found'], 404);
+        } catch (\Exception $e) {
+        Log::error('Error generating access token:', ['exception' => $e]);
+        return response()->json(['message' => 'Error generating access token'], 500);
+        }
     }
 }
+
+
+

@@ -6,18 +6,28 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\API\AuthController;
 
-Route::get('/user', function (Request $request) {
+ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
 
+Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 
-Route::group(['namespace' => 'App\Http\Controllers'], function(){
+Route::middleware(['auth:api', 'admin'])->group(function () {
+    Route::get('players', [UserController::class, 'index']);
+    Route::get('/players/{id}/games', [UserController::class, 'show']);
+    Route::get('/players/ranking', [UserController::class, 'averageSuccessRanking']);
+    Route::get('/players/ranking/loser', [UserController::class, 'showLoser']);
+    Route::get('/players/ranking/winner', [UserController::class, 'showWinner']);
+    Route::post('/players', [UserController::class, 'store']);
+    Route::put('/players/{id}', [UserController::class, 'update']);
+    Route::patch('/players/{id}', [UserController::class, 'update']);
+    Route::post('/players/{id}/games', [GameController::class, 'store']);
+    Route::delete('/players/{id}/games', [GameController::class, 'destroy']);
+});
 
-    Route::post('register', [AuthController::class, 'register']);
-
-    Route::post('login', [AuthController::class, 'login']);
+/* Route::group(['namespace' => 'App\Http\Controllers'], function(){
 
     //GET /players: retorna el llistat de tots els jugadors/es del sistema amb el seu percentatge mitjà d’èxits
     Route::get('players', [UserController::class, 'index']);
@@ -49,4 +59,4 @@ Route::group(['namespace' => 'App\Http\Controllers'], function(){
     //DELETE /players/{id}/games: elimina les tirades del jugador/a.
     Route::delete('players/{id}/games', [Gamecontroller::class, 'destroy']);
 
-});
+}); */
