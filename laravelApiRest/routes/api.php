@@ -14,7 +14,7 @@ use App\Http\Controllers\API\AuthController;
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 
-Route::middleware(['auth:api', 'admin'])->group(function () {
+Route::middleware(['can:is-admin'])->group(function () {
     Route::get('players', [UserController::class, 'index']);
     Route::get('/players/{id}/games', [UserController::class, 'show']);
     Route::get('/players/ranking', [UserController::class, 'averageSuccessRanking']);
