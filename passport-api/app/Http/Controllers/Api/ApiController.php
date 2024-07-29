@@ -18,4 +18,16 @@ class ApiController extends Controller
     {
         
     }
+
+    // GET [ Auth: Token]
+    public function profile()
+    {
+        
+    }
+
+    // GET [ Auth: Token]
+    public function logout()
+    {
+        
+    }
 }
