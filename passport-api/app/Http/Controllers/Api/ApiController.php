@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use app\Models\User;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class ApiController extends Controller
 {
@@ -15,7 +16,7 @@ class ApiController extends Controller
         $request->validate([
             "name" => "required|string",
             "email" => "required|string|email|unique:users",
-            "password" => "required"
+            "password" => "required|confirmed" //password_confirmation
         ]);
 
         //Create User
@@ -34,6 +35,45 @@ class ApiController extends Controller
     // POST [ email, password]
     public function login(Request $request)
     {
+        //Validation
+
+        //Email check
+
+        //Auth Token (passport authentication value)
+
+        $request->validate([
+            "email" => "required|string|email|unique:users",
+            "password" => "required" 
+        ]);
+
+        //User object
+        $user = User::where("email", $request->email)->first();
+
+        if(!empty($user)){
+            if(Hash::check($request->password, $user->password)){
+                //Password matched
+                $token = $user->createToken("mytoken")->accessToken;
+
+                return response()->json([
+                    "status" => true,
+                    "message" => "Login successful",
+                    "token" => $token,
+                    "data" => []                 
+                ]);
+            } else {
+                return response()->json([
+                    "status" => false,
+                    "message" => "Password didn't match",
+                    "data" => []
+                ]);
+            }
+        } else {
+            return response()->json([
+                "status" => false,
+                "message" => "Invalid Email Value",
+                "data" => []
+            ]);
+        }
         
     }
 
