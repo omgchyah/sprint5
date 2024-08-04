@@ -42,7 +42,7 @@ class ApiController extends Controller
         //Auth Token (passport authentication value)
 
         $request->validate([
-            "email" => "required|string|email|unique:users",
+            "email" => "required|string|email",
             "password" => "required" 
         ]);
 
@@ -80,7 +80,13 @@ class ApiController extends Controller
     // GET [ Auth: Token]
     public function profile()
     {
-        
+        $userData = auth()->user();
+
+        return response()->json([
+            "status" => true,
+            "message" => "Profile information",
+            "data" => $userData
+        ]);
     }
 
     // GET [ Auth: Token]
