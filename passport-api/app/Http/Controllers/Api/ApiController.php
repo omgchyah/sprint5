@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
+//https://www.youtube.com/watch?v=iCGZ6iRq5hg&ab_channel=OnlineWebTutor
+
 class ApiController extends Controller
 {
     // POST [name, email, password]
